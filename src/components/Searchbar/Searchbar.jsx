@@ -1,52 +1,44 @@
 // import PropTypes from 'prop-types';
 import css from './Searchbar.module.css';
-import { Component } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
-export class Searchbar extends Component {
-  state = {
-    value: '',
+export const Searchbar = ({ onSubmit }) => {
+  const [value, setValue] = useState('');
+
+  const handleChange = ({ target: { value } }) => {
+    setValue(value);
   };
 
-  handleChange = ({ target: { value } }) => {
-    this.setState({ value });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.value.trim() === '') {
+    if (value.trim() === '') {
       toast.info('Введіть свій запит, будь ласка!');
       return;
     }
-    this.props.onSubmit(this.state.value);
-    this.reset();
+    onSubmit(value);
+    reset();
   };
 
-  reset = () =>
-    this.setState({
-      value: '',
-    });
+  const reset = () => setValue('');
 
-  render() {
-    const { value } = this.state;
-    return (
-      <div className={css.searchbar}>
-        <form className={css.form} onSubmit={this.handleSubmit}>
-          <input
-            className={css.form_input}
-            type="text"
-            onChange={this.handleChange}
-            value={value}
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-          <button type="submit" className={css.form_button}>
-            <span>Search</span>
-          </button>
-        </form>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={css.searchbar}>
+      <form className={css.form} onSubmit={handleSubmit}>
+        <input
+          className={css.form_input}
+          type="text"
+          onChange={handleChange}
+          value={value}
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+        <button type="submit" className={css.form_button}>
+          <span>Search</span>
+        </button>
+      </form>
+    </div>
+  );
+};

@@ -12,12 +12,12 @@ import css from './App.module.css';
 import { useState } from 'react';
 
 export const App = () => {
-  const { isloading, setIsloading } = useState(false);
-  const { photos, setPhotos } = useState([]);
-  const { photoName, setPhotoName } = useState('');
-  const { page, setPage } = useState(1);
-  const { btnLoadMore, setBtnLoadMore } = useState(false);
-  const { selectedPhoto, setSelectedPhoto } = useState(null);
+  const [isloading, setIsloading] = useState(false);
+  const [photos, setPhotos] = useState([]);
+  const [photoName, setPhotoName] = useState('');
+  const [page, setPage] = useState(1);
+  const [btnLoadMore, setBtnLoadMore] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   useEffect(() => {
     if (!photoName) {

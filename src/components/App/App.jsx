@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Searchbar } from '../Searchbar/Searchbar';
 import { ToastContainer } from 'react-toastify';
-import { searchPhoto } from '../ImageInfo/image';
+import { searchPhoto } from '../../services/api';
 import { toast } from 'react-toastify';
 import { ImageGalery } from '../ImageGallery/ImageGallery';
 import { Button } from '../Button/Button';
@@ -25,12 +25,6 @@ export const App = () => {
     }
     setIsloading(true);
     searchPhoto(photoName, page)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.status);
-        }
-        return response.json();
-      })
       .then(data => {
         if (data.totalHits === 0) {
           toast.warning(
@@ -90,7 +84,7 @@ export const App = () => {
       <Searchbar onSubmit={onSubmitForm} />
       {isloading && <Loader />}
       <ImageGalery photos={photos} onClickImageItem={toggleModal} />
-      {photos.length !== 0 && btnLoadMore && (
+      {photos.length !== 0 && btnLoadMore && isloading && (
         <Button onClickRender={onClickRender} />
       )}
       {selectedPhoto && (
